@@ -1,6 +1,7 @@
 
 
 import java.awt.BorderLayout;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.swing.JPanel;
@@ -31,6 +32,10 @@ public class CalendarController extends JPanel{
 	
 	public void changeView(GregorianCalendar c, int n) {
 		selectedView.printView(c, n);
+	}
+	
+	public void agendaView(Date f, Date t) {
+		selectedView.printAgendaView(f, t);
 	}
 	
 }
