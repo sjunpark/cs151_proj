@@ -54,6 +54,9 @@ public class Buttons extends JPanel implements ActionListener {
 		this.add(nextMonthBtn);
 		this.add(createBtn);
 		this.add(quitBtn);
+		this.add(day);
+		this.add(week);
+		this.add(month);
 		
 	}
 
@@ -70,7 +73,7 @@ public class Buttons extends JPanel implements ActionListener {
 			mc.getCalendarController().changeDate(temp);
 		}
 		else if(e.getSource()==createBtn){
-			Create c = new Create(mc.getEventSet());
+			Create c = new Create(mc.getEventSet(), mc.getCalendar());
 			c.setVisible(true);
 		}
 		else if(e.getSource() == quitBtn)
@@ -78,6 +81,18 @@ public class Buttons extends JPanel implements ActionListener {
 		else if(e.getSource() == today){
 			cal= new GregorianCalendar();
 			mc.getCalendarController().changeDate(cal);
+		}
+		else if(e.getSource() == day) {
+			GregorianCalendar temp = cal;
+			mc.getCalendarController().changeView(temp, 1);
+		}
+		else if(e.getSource() == week) {
+			GregorianCalendar temp = cal;
+			mc.getCalendarController().changeView(temp, 2);
+		}
+		else if(e.getSource() == month) {
+			GregorianCalendar temp = cal;
+			mc.getCalendarController().changeView(temp, 3);
 		}
 	}
 }

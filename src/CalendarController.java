@@ -12,7 +12,6 @@ public class CalendarController extends JPanel{
 	
 	public CalendarController(MyCalendar myc) {
 		this.mc = myc;
-		
 		month = new MonthView(mc);
 		selectedView = new SelectedView(mc.getCalendar(), mc.getEventSet());
 		
@@ -27,6 +26,11 @@ public class CalendarController extends JPanel{
 	
 	public void changeDate(GregorianCalendar c) {
 		month.printMonthlyCalendar(c);
-		selectedView.printDayView(c);
+		selectedView.printView(c);
 	}
+	
+	public void changeView(GregorianCalendar c, int n) {
+		selectedView.printView(c, n);
+	}
+	
 }

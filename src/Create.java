@@ -2,6 +2,8 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -10,14 +12,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class Create extends JDialog implements ActionListener {
-	private JTextField 		event;
-	private JTextField 		date;
-	private JTextField 		startTime;
-	private JTextField 		endTime;
-	private JButton			create;
-	private EventSet		events;
+	private JTextField 			event;
+	private JTextField 			date;
+	private JTextField 			startTime;
+	private JTextField 			endTime;
+	private JButton				create;
+	private EventSet			events;
 	
-	public Create(EventSet e) {
+	public Create(EventSet e, GregorianCalendar c) {
 		events = e;
 
 		event = new JTextField(20);
@@ -26,8 +28,11 @@ public class Create extends JDialog implements ActionListener {
 		endTime = new JTextField(10);
 		create = new JButton("Create");
 		
+		SimpleDateFormat dFormat = new SimpleDateFormat("MM/dd/yyyy");
+		SimpleDateFormat tFormat = new SimpleDateFormat("HH:mm");
+		
 		event.setText("Title");
-		date.setText("Date (MM/DD/YYYY)");
+		date.setText(dFormat.format(c.getInstance().getTime()));
 		startTime.setText("Start time(HH:MM)");
 		endTime.setText("End time(HH:MM)");
 		event.addActionListener(this);
