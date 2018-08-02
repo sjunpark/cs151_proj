@@ -17,8 +17,8 @@ import javax.swing.JTextField;
 
 
 public class Buttons extends JPanel implements ActionListener {
-	private JButton 			previousMonthBtn;
-	private JButton				nextMonthBtn;
+	private JButton 			previousDayBtn;
+	private JButton				nextDayBtn;
 	private JButton				createBtn;
 	private JButton 			quitBtn;	
 	private JButton				today;
@@ -35,8 +35,8 @@ public class Buttons extends JPanel implements ActionListener {
 		cal = mc.getCalendar();
 		
 		today = new JButton("Today");
-		previousMonthBtn = new JButton("<");
-		nextMonthBtn = new JButton(">");
+		previousDayBtn = new JButton("<");
+		nextDayBtn = new JButton(">");
 		createBtn = new JButton("CREATE");
 		quitBtn = new JButton("QUIT");
 		day = new JButton("Day");
@@ -46,8 +46,8 @@ public class Buttons extends JPanel implements ActionListener {
 		fromFile = new JButton("From File");
 
 		today.addActionListener(this);
-		previousMonthBtn.addActionListener(this);
-		nextMonthBtn.addActionListener(this);
+		previousDayBtn.addActionListener(this);
+		nextDayBtn.addActionListener(this);
 		createBtn.addActionListener(this);
 		quitBtn.addActionListener(this);
 		day.addActionListener(this);
@@ -57,8 +57,8 @@ public class Buttons extends JPanel implements ActionListener {
 		fromFile.addActionListener(this);
 		
 		this.add(today);
-		this.add(previousMonthBtn);
-		this.add(nextMonthBtn);
+		this.add(previousDayBtn);
+		this.add(nextDayBtn);
 		this.add(createBtn);
 		this.add(quitBtn);
 		this.add(day);
@@ -70,15 +70,13 @@ public class Buttons extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==previousMonthBtn){
-			GregorianCalendar temp = cal;
-			temp.add(Calendar.DATE,-1);
-			mc.getCalendarController().changeDate(temp);
+		if(e.getSource()==previousDayBtn){
+			cal.add(Calendar.DATE,-1);
+			mc.getCalendarController().changeDate(cal);
 		}
-		else if(e.getSource()==nextMonthBtn){
-			GregorianCalendar temp = cal;
-			temp.add(Calendar.DATE,1);
-			mc.getCalendarController().changeDate(temp);
+		else if(e.getSource()==nextDayBtn){
+			cal.add(Calendar.DATE,1);
+			mc.getCalendarController().changeDate(cal);
 		}
 		else if(e.getSource()==createBtn){
 			Create c = new Create(mc.getEventSet(), mc.getCalendar());
@@ -87,28 +85,25 @@ public class Buttons extends JPanel implements ActionListener {
 		else if(e.getSource() == quitBtn)
 			mc.closeProgram();
 		else if(e.getSource() == today){
-			GregorianCalendar temp = cal;
 			cal= new GregorianCalendar();
-			mc.getCalendarController().changeDate(temp);
+			mc.getCalendarController().changeDate(cal);
 		}
 		else if(e.getSource() == day) {
-			GregorianCalendar temp = cal;
-			mc.getCalendarController().changeView(temp, 1);
-			setColor(day);
+			mc.getCalendarController().changeView(cal, 1);
+			mc.changeButtonColors(day);
 		}
 		else if(e.getSource() == week) {
-			GregorianCalendar temp = cal;
-			mc.getCalendarController().changeView(temp, 2);
-			setColor(week);
+			mc.getCalendarController().changeView(cal, 2);
+			mc.changeButtonColors(week);
 		}
 		else if(e.getSource() == month) {
 			GregorianCalendar temp = cal;
 			mc.getCalendarController().changeView(temp, 3);
-			setColor(month);
+			mc.changeButtonColors(month);
 		}
 		else if(e.getSource() == agenda) {
 			new Agenda().setVisible(true);;
-			setColor(agenda);
+			mc.changeButtonColors(agenda);
 		}
 	}
 	
@@ -119,7 +114,11 @@ public class Buttons extends JPanel implements ActionListener {
 		agenda.setBackground(Color.WHITE);
 		
 		b.setBackground(Color.GRAY);
+		
+		day.repaint();
+		week.repaint();
 	}
+	
 	
 	private class Agenda extends JDialog {
 		public Agenda() {

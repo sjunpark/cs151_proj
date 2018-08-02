@@ -13,7 +13,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TreeSet;
 
-
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -137,7 +137,10 @@ public class MyCalendar extends JFrame {
 	public CalendarController getCalendarController() {
 		return this.calControl;
 	}
-	
+	public void changeButtonColors (JButton b) {
+		btns.setColor(b);
+		btns.repaint();
+	}
 	public void closeProgram() {
 		saveEvents();
 		this.setVisible(false);

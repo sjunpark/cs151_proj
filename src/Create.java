@@ -2,6 +2,8 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
@@ -11,7 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class Create extends JDialog implements ActionListener {
+public class Create extends JDialog implements ActionListener, FocusListener {
 	private JTextField 			event;
 	private JTextField 			date;
 	private JTextField 			startTime;
@@ -40,6 +42,11 @@ public class Create extends JDialog implements ActionListener {
 		startTime.addActionListener(this);
 		endTime.addActionListener(this);
 		create.addActionListener(this);
+		
+		event.addFocusListener(this);
+		startTime.addFocusListener(this);
+		endTime.addFocusListener(this);
+		
 		
 		JPanel panel = new JPanel();
 		panel.add(event);
@@ -74,4 +81,12 @@ public class Create extends JDialog implements ActionListener {
 			setVisible(false);
 		}
 	}
+	@Override
+	public void focusGained(FocusEvent e) {
+		event.setText("");
+		startTime.setText("");
+		endTime.setText("");
+	}
+	@Override
+	public void focusLost(FocusEvent e) {}
 }

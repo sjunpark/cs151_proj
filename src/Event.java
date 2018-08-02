@@ -54,7 +54,7 @@ public class Event implements Comparable<Event>, Serializable {
 	}
 	
 	public String toString() {
-		SimpleDateFormat dFormat = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat dFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 		return " " +dFormat.format(date) + " - " + endTime + " "+ title;
 	}
 
