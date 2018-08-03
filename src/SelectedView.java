@@ -10,13 +10,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-public 	class SelectedView extends JPanel {
+public 	class SelectedView extends JPanel implements CalendarLayout{
 	private JTextArea		  textArea;
 	private JLabel			  date;
 	private GregorianCalendar cal;
 	private EventSet		  events;
 	private int 			  selection;
-    private int[] lastDates ={31,29,31,30,31,30,31,31,30,31,30,31};
+    private int[] lastDates ={31,28,31,30,31,30,31,31,30,31,30,31};
     private Date			  from;
     private Date			  to;
 	
@@ -32,13 +32,13 @@ public 	class SelectedView extends JPanel {
 		date = new JLabel(Integer.toString(d)+" / "+cal.get(Calendar.DATE));
 		this.add(date,BorderLayout.NORTH);
 		textArea = new JTextArea();
-		printDayView(cal);
+		printCalendar(cal);
 		this.add(textArea);
 	}
 	
 	public void printView(GregorianCalendar c) {
 		if (selection == 1)
-			printDayView(c);
+			printCalendar(c);
 		else if (selection == 2) 
 			printWeekView(c);
 		else if (selection == 3)
@@ -50,14 +50,14 @@ public 	class SelectedView extends JPanel {
 	public void printView(GregorianCalendar c, int n) {
 		selection = n;
 		if (selection == 1)
-			printDayView(c);
+			printCalendar(c);
 		else if (selection == 2) 
 			printWeekView(c);
 		else if (selection == 3)
 			printMonthView(c);
 	}
-	
-	public void printDayView(GregorianCalendar c) {
+	@Override
+	public void printCalendar(GregorianCalendar c) {
 		date.setText(c.get(Calendar.MONTH)+1+" / "+c.get(Calendar.DATE));
 		Calendar temp = new GregorianCalendar();
 		String str = "";
@@ -134,7 +134,7 @@ public 	class SelectedView extends JPanel {
 	}
 	
 	public void printAgendaView(Date f, Date t) {
-		date.setText(cal.get(Calendar.MONTH)+1+" / "+cal.get(Calendar.DATE));
+		date.setText("Agenda");
 		from = f;
 		to = t;
 		

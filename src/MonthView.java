@@ -31,10 +31,10 @@ enum DAYS
 }
 
 
-public class MonthView extends JPanel implements MouseListener, ActionListener {
+public class MonthView extends JPanel implements MouseListener, ActionListener, CalendarLayout {
 	public final static MONTHS[] arrayOfMonths = MONTHS.values();
     public final static DAYS[] arrayOfDays = DAYS.values();
-    private int[] lastDates ={31,29,31,30,31,30,31,31,30,31,30,31};
+    private int[] lastDates ={31,28,31,30,31,30,31,31,30,31,30,31};
 	private GregorianCalendar cal;
 	private EventSet		  events;
 	private ArrayList<JLabel> dates;
@@ -52,10 +52,11 @@ public class MonthView extends JPanel implements MouseListener, ActionListener {
 		
 		dates = new ArrayList<JLabel>();
 		
-		printMonthlyCalendar(cal);
+		printCalendar(cal);
 
 	}
-	public void printMonthlyCalendar(GregorianCalendar c) {
+	@Override
+	public void printCalendar(GregorianCalendar c) {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		

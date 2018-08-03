@@ -3,6 +3,7 @@
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -65,7 +66,7 @@ public class Buttons extends JPanel implements ActionListener {
 		this.add(week);
 		this.add(month);
 		this.add(agenda);
-		
+		this.add(fromFile);
 	}
 
 	@Override
@@ -79,8 +80,7 @@ public class Buttons extends JPanel implements ActionListener {
 			mc.getCalendarController().changeDate(cal);
 		}
 		else if(e.getSource()==createBtn){
-			Create c = new Create(mc.getEventSet(), mc.getCalendar());
-			c.setVisible(true);
+			new Create(mc.getEventSet(), mc.getCalendar()).setVisible(true);
 		}
 		else if(e.getSource() == quitBtn)
 			mc.closeProgram();
@@ -102,8 +102,15 @@ public class Buttons extends JPanel implements ActionListener {
 			mc.changeButtonColors(month);
 		}
 		else if(e.getSource() == agenda) {
-			new Agenda().setVisible(true);;
+			new Agenda(mc).setVisible(true);
 			mc.changeButtonColors(agenda);
+		}
+		else if(e.getSource() == fromFile) {
+			try {
+				new FromFile(mc.getEventSet());
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 	}
 	
@@ -120,43 +127,5 @@ public class Buttons extends JPanel implements ActionListener {
 	}
 	
 	
-	private class Agenda extends JDialog {
-		public Agenda() {
-			JPanel panel = new JPanel();
-			JLabel fromLabel = new JLabel("From");
-			JLabel toLabel = new JLabel("to");
-			JTextField fromText = new JTextField(8);
-			JTextField toText = new JTextField(8);
-			JButton btn = new JButton("save");
-			panel.add(fromLabel);
-			panel.add(fromText);
-			panel.add(toLabel);
-			panel.add(toText);
-			panel.add(btn);
-			
-			btn.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					String f = fromText.getText();
-					String t = toText.getText();
-					SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-					Date from = new Date();
-					Date to = new Date();
-					try {
-						from = format.parse(f);
-						to = format.parse(t);
-					} catch (ParseException e1) {
-						e1.printStackTrace();
-					}
-					mc.getCalendarController().agendaView(from, to);
-					setVisible(false);
-				}
-			});
-			
-			
-			this.add(panel);
-			pack();
-			setModal(true);
-		}
-	}
+
 }

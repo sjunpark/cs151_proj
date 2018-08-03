@@ -30,6 +30,7 @@ public class MyCalendar extends JFrame {
 	public MyCalendar() {
 		cal = new GregorianCalendar();
 		eventSet = new EventSet();
+		loadEvents();
 		calControl = new CalendarController(this);
 		btns = new Buttons(this);
 		ChangeListener l = new ChangeListener() {
@@ -52,7 +53,6 @@ public class MyCalendar extends JFrame {
 
 		
 		
-		loadEvents();
 
 		print();
 	}

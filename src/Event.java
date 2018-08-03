@@ -25,6 +25,11 @@ public class Event implements Comparable<Event>, Serializable {
 		this.title = t;
 	}
 	
+	public Event(Date d, String t, String et) {
+		this.date = d;
+		this.endTime = et;
+		this.title = t;
+	}
 	public Date getDate() {
 		return this.date;
 	}

@@ -22,11 +22,11 @@ public class CalendarController extends JPanel{
 	}
 	
 	public void modify() {
-		selectedView.printDayView(mc.getCalendar());
+		selectedView.printCalendar(mc.getCalendar());
 	}
 	
 	public void changeDate(GregorianCalendar c) {
-		month.printMonthlyCalendar(c);
+		month.printCalendar(c);
 		selectedView.printView(c);
 	}
 	

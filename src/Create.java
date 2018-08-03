@@ -83,9 +83,12 @@ public class Create extends JDialog implements ActionListener, FocusListener {
 	}
 	@Override
 	public void focusGained(FocusEvent e) {
-		event.setText("");
-		startTime.setText("");
-		endTime.setText("");
+		if(e.getSource() == event)
+			event.setText("");
+		else if(e.getSource() == startTime)
+			startTime.setText("");
+		else if(e.getSource() == endTime)
+			endTime.setText("");
 	}
 	@Override
 	public void focusLost(FocusEvent e) {}
