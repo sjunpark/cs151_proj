@@ -9,24 +9,27 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TreeSet;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-
+/**
+ * MyCalendar class is a frame of all views.
+ * @author Seongjun Park, Abdullahfaisala Alseddiq, Yan Chen
+ * 		   Team Luck 7
+ */
 public class MyCalendar extends JFrame {
 	private EventSet			eventSet;
 	private CalendarController	calControl;
 	private GregorianCalendar 	cal;
 	private Buttons				btns;
-//	private JPanel btnPanel;
-
 	
+	/**
+	 * Constructor of MyCalendar.
+	 */
 	public MyCalendar() {
 		cal = new GregorianCalendar();
 		eventSet = new EventSet();
@@ -41,22 +44,12 @@ public class MyCalendar extends JFrame {
 		};
 		eventSet.attach(l);
 		
-//		eventSet.addEvent(new Event("1/1/2018","5:00","12:00","Homework for CS 151"));
-//		eventSet.addEvent(new Event("1/1/2019","5:00","12:00","take a nap"));
-//		eventSet.addEvent(new Event("1/2/2018","5:00","12:00","Homewor for CHAD 102"));	
-//		eventSet.addEvent(new Event("6/23/2018","3:00","12:00","Cook for friends"));
-//		eventSet.addEvent(new Event("6/24/2018","3:00","12:00","Go to the church"));
-//		eventSet.addEvent(new Event("6/23/2018","6:00","12:00","hahahahahahahaha"));
-//		eventSet.addEvent(new Event("7/21/2018","4:00","12:20","good"));
-//		eventSet.addEvent(new Event("7/21/2018","20:00","12:20","fine"));
-//		eventSet.addEvent(new Event("7/22/2018","4:00","12:20","bad"));
-
-		
-		
-
 		print();
 	}
 	
+	/**
+	 * add panels to MyCalendar
+	 */
 	public void print() {
 		this.add(calControl, BorderLayout.CENTER);
 		this.add(btns, BorderLayout.NORTH);
@@ -66,6 +59,11 @@ public class MyCalendar extends JFrame {
 		this.setVisible(true);
 	}
 	
+	/**
+	 * check a file whether it exists or not
+	 * @return true if a file is existed
+	 * 		   false if a file is not existed
+	 */
 	public boolean checkFile() {
 		File f = new File("events.txt");
 		if(!f.exists() && !f.isDirectory()){
@@ -81,6 +79,9 @@ public class MyCalendar extends JFrame {
 		return true;
 	}
 	
+	/**
+	 * load events from a file when a program is started
+	 */
 	public void loadEvents() {
 		if(!checkFile())
 			return;
@@ -103,6 +104,9 @@ public class MyCalendar extends JFrame {
 		
 	}
 	
+	/**
+	 * save all events in EvenSet when program is closed
+	 */
 	public void saveEvents() {
 		try {
 			FileOutputStream fs = new FileOutputStream("events.txt");
@@ -122,25 +126,36 @@ public class MyCalendar extends JFrame {
 		this.dispose();
 	}
 	
-	public void changeDate(GregorianCalendar c) {
-		calControl.changeDate(c);
-	}
-	
+
+//	public void changeDate(GregorianCalendar c) {
+//		calControl.changeDate(c);
+//	}
+	/**
+	 * Getter of EventSet
+	 * @return EventSet
+	 */
 	public EventSet getEventSet() {
 		return this.eventSet;
 	}
-	
+	/**
+	 * Getter of GregorianCalendar
+	 * @return GregorianCalendar
+	 */
 	public GregorianCalendar getCalendar() {
 		return this.cal;
 	}
 	
+	/**
+	 * Getter of CalendarController
+	 * @return CalendarController
+	 */
 	public CalendarController getCalendarController() {
 		return this.calControl;
 	}
-	public void changeButtonColors (JButton b) {
-		btns.setColor(b);
-		btns.repaint();
-	}
+
+	/**
+	 * calls a saveEvents and close MyCalendar
+	 */
 	public void closeProgram() {
 		saveEvents();
 		this.setVisible(false);

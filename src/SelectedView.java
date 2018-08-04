@@ -8,8 +8,13 @@ import java.util.GregorianCalendar;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-
+/**
+ * SelectedView class to display events daily, weekly, monthly, and agenda
+ * @author Seongjun Park, Abdullahfaisala Alseddiq, Yan Chen
+ * 		   Team Luck 7
+ */
 public 	class SelectedView extends JPanel implements CalendarLayout{
 	private JTextArea		  textArea;
 	private JLabel			  date;
@@ -20,6 +25,11 @@ public 	class SelectedView extends JPanel implements CalendarLayout{
     private Date			  from;
     private Date			  to;
 	
+    /**
+     * Constructor of SelectedView
+     * @param c is current calendar
+     * @param e is EventSet of the program
+     */
 	public SelectedView(Calendar c, EventSet e) {
 		cal = (GregorianCalendar) c;
 		events = e;
@@ -33,9 +43,17 @@ public 	class SelectedView extends JPanel implements CalendarLayout{
 		this.add(date,BorderLayout.NORTH);
 		textArea = new JTextArea();
 		printCalendar(cal);
-		this.add(textArea);
+		
+	    JScrollPane vertical = new JScrollPane(textArea);
+	    vertical.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        this.add(vertical);
+
 	}
 	
+	/**
+	 * call prints methods depending on what a user chose previously
+	 * @param c current date
+	 */
 	public void printView(GregorianCalendar c) {
 		if (selection == 1)
 			printCalendar(c);
@@ -44,9 +62,14 @@ public 	class SelectedView extends JPanel implements CalendarLayout{
 		else if (selection == 3)
 			printMonthView(c);
 		else if (selection == 4)
-			printAgendaView(from,to);
+			printAgendaView(from,to,c);
 	}
 	
+	/**
+	 * takes a user input to display views and calls methods
+	 * @param c
+	 * @param n
+	 */
 	public void printView(GregorianCalendar c, int n) {
 		selection = n;
 		if (selection == 1)
@@ -55,7 +78,14 @@ public 	class SelectedView extends JPanel implements CalendarLayout{
 			printWeekView(c);
 		else if (selection == 3)
 			printMonthView(c);
+		else if (selection == 4)
+			printAgendaView(from,to,c);
 	}
+	
+	/**
+	 * Overridden method from CalendarLayout.
+	 * displays daily view which is default view of the program
+	 */
 	@Override
 	public void printCalendar(GregorianCalendar c) {
 		date.setText(c.get(Calendar.MONTH)+1+" / "+c.get(Calendar.DATE));
@@ -78,6 +108,10 @@ public 	class SelectedView extends JPanel implements CalendarLayout{
 			textArea.setText(str);
 	}
 	
+	/**
+	 * Prints events on current's date's week
+	 * @param c stores a current date
+	 */
 	public void printWeekView(GregorianCalendar c) {
 		date.setText(c.get(Calendar.MONTH)+1+" / "+c.get(Calendar.DATE));
 		int d = c.get(Calendar.DAY_OF_WEEK)-1;
@@ -113,6 +147,10 @@ public 	class SelectedView extends JPanel implements CalendarLayout{
 			textArea.setText(str);
 	}
 	
+	/**
+	 * Prints events on current's date's month
+	 * @param c stores a current date
+	 */
 	public void printMonthView(GregorianCalendar c) {
 		date.setText(c.get(Calendar.MONTH)+1+" / "+c.get(Calendar.DATE));
 		Calendar temp = new GregorianCalendar();
@@ -133,8 +171,13 @@ public 	class SelectedView extends JPanel implements CalendarLayout{
 			textArea.setText(str);
 	}
 	
-	public void printAgendaView(Date f, Date t) {
-		date.setText("Agenda");
+	/**
+	 * print all events in a range that a user determines
+	 * @param f begining date of agenda
+	 * @param t end date of agenda
+	 */
+	public void printAgendaView(Date f, Date t, GregorianCalendar c) {
+		date.setText(c.get(Calendar.MONTH)+1+" / "+c.get(Calendar.DATE));
 		from = f;
 		to = t;
 		

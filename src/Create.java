@@ -12,7 +12,11 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
+/**
+ * Create class to create a new Event
+ * @author Seongjun Park, Abdullahfaisala Alseddiq, Yan Chen
+ * 		   Team Luck 7
+ */
 public class Create extends JDialog implements ActionListener, FocusListener {
 	private JTextField 			event;
 	private JTextField 			date;
@@ -20,7 +24,11 @@ public class Create extends JDialog implements ActionListener, FocusListener {
 	private JTextField 			endTime;
 	private JButton				create;
 	private EventSet			events;
-	
+	/**
+	 * Constructor of Create. Sets JTextFields and JButton and adds to ActionListener
+	 * @param e is EventSet to add Event
+	 * @param c to display a current date
+	 */
 	public Create(EventSet e, GregorianCalendar c) {
 		events = e;
 
@@ -59,6 +67,10 @@ public class Create extends JDialog implements ActionListener, FocusListener {
 		pack();
 		setModal(true);
 	}
+	
+	/**
+	 * When create button is clicked, this method creates a new Event and adds to EventSet
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==create) {
@@ -69,7 +81,6 @@ public class Create extends JDialog implements ActionListener, FocusListener {
 			for(Event v : events){
 				if(d.equals(v.getStringDate())) {
 					if(sTime.equals(v.getStartTime())){
-						System.out.println("im here");
 						JOptionPane optionPane = new JOptionPane("Time Conflict", JOptionPane.ERROR_MESSAGE);    
 						JDialog dialog = optionPane.createDialog("Time Conflict");
 						dialog.setAlwaysOnTop(true);
@@ -81,6 +92,10 @@ public class Create extends JDialog implements ActionListener, FocusListener {
 			setVisible(false);
 		}
 	}
+	
+	/**
+	 * to add utility that erase text on JTextfield
+	 */
 	@Override
 	public void focusGained(FocusEvent e) {
 		if(e.getSource() == event)

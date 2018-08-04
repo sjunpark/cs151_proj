@@ -2,16 +2,12 @@
 
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +16,11 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
+/**
+ * MonthView class is implementing CalendarLayout and display a calendar
+ * @author Seongjun Park, Abdullahfaisala Alseddiq, Yan Chen
+ * 		   Team Luck 7
+ */
 enum MONTHS
 {
 	Jan, Feb, March, April, May, June, July, Aug, Sep, Oct, Novr, Dec;
@@ -31,7 +31,7 @@ enum DAYS
 }
 
 
-public class MonthView extends JPanel implements MouseListener, ActionListener, CalendarLayout {
+public class MonthView extends JPanel implements MouseListener, CalendarLayout {
 	public final static MONTHS[] arrayOfMonths = MONTHS.values();
     public final static DAYS[] arrayOfDays = DAYS.values();
     private int[] lastDates ={31,28,31,30,31,30,31,31,30,31,30,31};
@@ -42,7 +42,11 @@ public class MonthView extends JPanel implements MouseListener, ActionListener, 
 	private JLabel	 		  preMonth;
 	private JLabel	 		  nextMonth;
 	private MyCalendar		  mc;
-
+	
+	/**
+	 * Constructor of MonthView.
+	 * @param myc to get reference of EventSet and GregorianCalendar
+	 */
 	public MonthView(MyCalendar myc) {
 		this.mc = myc;
 		events = mc.getEventSet();
@@ -55,6 +59,11 @@ public class MonthView extends JPanel implements MouseListener, ActionListener, 
 		printCalendar(cal);
 
 	}
+	
+	/**
+	 * Overrides a method from CalendarLayout.
+	 * displays a monthly calendar and indicates a day where user is looking at.
+	 */
 	@Override
 	public void printCalendar(GregorianCalendar c) {
 		JPanel panel = new JPanel();
@@ -113,28 +122,30 @@ public class MonthView extends JPanel implements MouseListener, ActionListener, 
 	}
 	
 	
-
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {}
+	/**
+	 * When a user presses a date in the calendar, SelectedView would be changed to different date that I pressed. 
+	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
 		JLabel d = (JLabel) e.getSource();
 		if(d.getText().equals(preMonth.getText())) {
 			GregorianCalendar temp = cal;
 			temp.add(Calendar.MONTH,-1);
-			mc.changeDate(temp);
+			mc.getCalendarController().changeDate(temp);
 		}
 		else if (d.getText().equals(nextMonth.getText())) {
 			GregorianCalendar temp = cal;
 			temp.add(Calendar.MONTH,1);
-			mc.changeDate(temp);
+			mc.getCalendarController().changeDate(temp);
 		}
 		else {
-//			JLabel d = (JLabel) e.getSource();
-			GregorianCalendar c = new GregorianCalendar();
+			GregorianCalendar temp = cal;
 			int date = Integer.valueOf(d.getText());
-			c.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), date);
-			mc.changeDate(c);
+			temp.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), date);
+			mc.getCalendarController().changeDate(temp);
 		}
 	}
 	@Override
@@ -143,20 +154,5 @@ public class MonthView extends JPanel implements MouseListener, ActionListener, 
 	public void mouseEntered(MouseEvent e) {}
 	@Override
 	public void mouseExited(MouseEvent e) {}
-
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == preMonth){
-			GregorianCalendar temp = cal;
-			temp.add(Calendar.MONTH,-1);
-			mc.changeDate(temp);
-		}
-		else if(e.getSource() == nextMonth) {
-			GregorianCalendar temp = cal;
-			temp.add(Calendar.MONTH,1);
-			mc.changeDate(temp);
-		}
-	}
 }
 

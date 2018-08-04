@@ -1,3 +1,4 @@
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
@@ -10,9 +11,20 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * Agenda class to pop-up a new window to get user's input
+ * @author Seongjun Park, Abdullahfaisala Alseddiq, Yan Chen
+ * 		   Team Luck 7
+ */
 public class Agenda extends JDialog {
 	private MyCalendar mc;
 	
+	/**
+	 * Constructor of Agenda.
+	 * Creates a new window, and gets user input for agenda
+	 * Saves user input and call a CalendarController's method to change SelectedView
+	 * @param myCalendar
+	 */
 	public Agenda(MyCalendar myCalendar) {
 		mc = myCalendar;
 		JPanel panel = new JPanel();
@@ -41,7 +53,7 @@ public class Agenda extends JDialog {
 				} catch (ParseException e1) {
 					e1.printStackTrace();
 				}
-				mc.getCalendarController().agendaView(from, to);
+				mc.getCalendarController().agendaView(from, to, mc.getCalendar());
 				setVisible(false);
 			}
 		});

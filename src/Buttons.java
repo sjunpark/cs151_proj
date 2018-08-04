@@ -1,22 +1,21 @@
 
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
-
+/**
+ * Button class to display buttons and for a controller
+ * @author Seongjun Park, Abdullahfaisala Alseddiq, Yan Chen
+ * 		   Team Luck 7
+ */
 public class Buttons extends JPanel implements ActionListener {
 	private JButton 			previousDayBtn;
 	private JButton				nextDayBtn;
@@ -31,6 +30,10 @@ public class Buttons extends JPanel implements ActionListener {
 	private GregorianCalendar 	cal;
 	private MyCalendar			mc;
 	
+	/**
+	 * Constructor of Buttons. Initialize each buttons and add action listener
+	 * @param myc to get reference of EventSet and Calendar
+	 */
 	public Buttons(MyCalendar myc) {		
 		this.mc = myc;
 		cal = mc.getCalendar();
@@ -56,6 +59,15 @@ public class Buttons extends JPanel implements ActionListener {
 		month.addActionListener(this);
 		agenda.addActionListener(this);
 		fromFile.addActionListener(this);
+		createBtn.setForeground(Color.RED);
+//		createBtn.setOpaque(true);
+		
+		day.setBackground(Color.GRAY);
+		week.setBackground(Color.GRAY);
+		month.setBackground(Color.GRAY);
+		agenda.setBackground(Color.GRAY);
+		
+		this.setPreferredSize(new Dimension(10,70));
 		
 		this.add(today);
 		this.add(previousDayBtn);
@@ -68,7 +80,11 @@ public class Buttons extends JPanel implements ActionListener {
 		this.add(agenda);
 		this.add(fromFile);
 	}
-
+	
+	/**
+	 * Controller of the project. 
+	 * This method is called by clicking each button.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==previousDayBtn){
@@ -90,20 +106,20 @@ public class Buttons extends JPanel implements ActionListener {
 		}
 		else if(e.getSource() == day) {
 			mc.getCalendarController().changeView(cal, 1);
-			mc.changeButtonColors(day);
+			setColor(day);
 		}
 		else if(e.getSource() == week) {
 			mc.getCalendarController().changeView(cal, 2);
-			mc.changeButtonColors(week);
+			setColor(week);
 		}
 		else if(e.getSource() == month) {
 			GregorianCalendar temp = cal;
 			mc.getCalendarController().changeView(temp, 3);
-			mc.changeButtonColors(month);
+			setColor(month);
 		}
 		else if(e.getSource() == agenda) {
 			new Agenda(mc).setVisible(true);
-			mc.changeButtonColors(agenda);
+			setColor(agenda);
 		}
 		else if(e.getSource() == fromFile) {
 			try {
@@ -114,18 +130,16 @@ public class Buttons extends JPanel implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Change a color of a background of buttons
+	 */
 	public void setColor(JButton b) {
-		day.setBackground(Color.WHITE);
-		week.setBackground(Color.WHITE);
-		month.setBackground(Color.WHITE);
-		agenda.setBackground(Color.WHITE);
+		day.setOpaque(false);
+		week.setOpaque(false);
+		month.setOpaque(false);
+		agenda.setOpaque(false);
 		
-		b.setBackground(Color.GRAY);
-		
-		day.repaint();
-		week.repaint();
+		b.setOpaque(true);
+		this.repaint();
 	}
-	
-	
-
 }
